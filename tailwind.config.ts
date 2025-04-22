@@ -52,6 +52,20 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				kids: {
+					DEFAULT: '#9b87f5',
+					light: '#e5deff',
+					dark: '#6E59A5',
+					hover: '#7E69AB',
+				},
+				family: {
+					purple: '#9b87f5',
+					blue: '#33C3F0',
+					green: '#F2FCE2',
+					yellow: '#FEF7CD',
+					orange: '#FEC6A1',
+					pink: '#FFDEE2',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

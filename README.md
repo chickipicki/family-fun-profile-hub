@@ -1,4 +1,6 @@
-# Welcome to your Lovable project
+# Family Fun Profile Hub
+
+A family-friendly profile management system with special features for kids' content.
 
 ## Project info
 
@@ -59,6 +61,21 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Features
+
+### Web Client Features
+
+#### 1. Awareness
+- **Onboarding Tour**: 3-step modal for first-time users (create kids profile → switch to it → view free content)
+- **Banner & Tooltip**: Dashboard banner promoting Kids-Space with tooltip highlighting the profile button
+
+#### 2. Engagement
+- **Profile Dropdown**: Header dropdown menu with available profiles (Main, Kids, Guest)
+
+#### 3. Conversion
+- **Content Filtering**: Toggle between Free/Premium content in Kids-Space
+- **One-click Purchase Confirmation**: In-app modal for purchase approval when a child attempts to buy premium content
 
 ## How can I deploy this project?
 

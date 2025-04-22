@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Profile } from "@/components/ProfileDropdown";
@@ -10,14 +9,14 @@ import ContentFilter from "@/components/ContentFilter";
 import PurchaseConfirmation from "@/components/PurchaseConfirmation";
 import { Button } from "@/components/ui/button";
 
-// Demo content for our app
+// Оновлений demoContent з тематичними картинками й більшим вибором
 const demoContent: Content[] = [
   {
     id: "1",
     title: "Пригоди у лісі",
     type: "video",
     isPremium: false,
-    imageUrl: "/placeholder.svg",
+    imageUrl: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=600&q=80",
     description: "Захоплива історія про дружбу і пригоди у чарівному лісі."
   },
   {
@@ -25,7 +24,7 @@ const demoContent: Content[] = [
     title: "Математичні головоломки",
     type: "game",
     isPremium: true,
-    imageUrl: "/placeholder.svg",
+    imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
     description: "Розвивайте логічне мислення з цікавими математичними головоломками."
   },
   {
@@ -33,7 +32,7 @@ const demoContent: Content[] = [
     title: "Енциклопедія тварин",
     type: "book",
     isPremium: false,
-    imageUrl: "/placeholder.svg",
+    imageUrl: "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?auto=format&fit=crop&w=600&q=80",
     description: "Дізнайтеся більше про цікавих тварин з усього світу."
   },
   {
@@ -41,8 +40,72 @@ const demoContent: Content[] = [
     title: "Космічні пригоди",
     type: "video",
     isPremium: true,
-    imageUrl: "/placeholder.svg",
+    imageUrl: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80",
     description: "Захоплива подорож у космос разом з юними астронавтами."
+  },
+  {
+    id: "5",
+    title: "Казки на ніч",
+    type: "book",
+    isPremium: false,
+    imageUrl: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=600&q=80",
+    description: "Колекція заспокійливих казок для читання перед сном."
+  },
+  {
+    id: "6",
+    title: "Малювання для початківців",
+    type: "video",
+    isPremium: true,
+    imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+    description: "Навчіться малювати разом з професійними художниками."
+  },
+  {
+    id: "7",
+    title: "Вивчаємо англійську",
+    type: "game",
+    isPremium: false,
+    imageUrl: "https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?auto=format&fit=crop&w=600&q=80",
+    description: "Цікава гра для вивчення нових слів та фраз англійською."
+  },
+  {
+    id: "8",
+    title: "Моя перша енциклопедія",
+    type: "book",
+    isPremium: true,
+    imageUrl: "https://images.unsplash.com/photo-1501286353178-1ec881214838?auto=format&fit=crop&w=600&q=80",
+    description: "Пізнавальні історії та факти для допитливих діток."
+  },
+  {
+    id: "9",
+    title: "Будуємо місто",
+    type: "game",
+    isPremium: false,
+    imageUrl: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=600&q=80",
+    description: "Гра-симулятор для тих, хто мріє стати будівельником."
+  },
+  {
+    id: "10",
+    title: "Світ динозаврів",
+    type: "video",
+    isPremium: false,
+    imageUrl: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?auto=format&fit=crop&w=600&q=80",
+    description: "Пізнавальний фільм про загадковий світ динозаврів."
+  },
+  {
+    id: "11",
+    title: "Кулінарна майстерня",
+    type: "video",
+    isPremium: true,
+    imageUrl: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=600&q=80",
+    description: "Навчальні відео для маленьких кухарів — готуємо здорово і весело!"
+  },
+  {
+    id: "12",
+    title: "Загадкові лабіринти",
+    type: "game",
+    isPremium: true,
+    imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=600&q=80",
+    description: "Обери героя та проходь різнокольорові лабіринти на швидкість!"
   }
 ];
 

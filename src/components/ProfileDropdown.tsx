@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import CreateChildProfileForm from "./CreateChildProfileForm";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export type Profile = {
   id: string;
@@ -38,9 +39,10 @@ const ProfileDropdown = ({
 }: ProfileDropdownProps) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [isAddProfileOpen, setIsAddProfileOpen] = useState(false);
+  const [hasSeenTooltip, setHasSeenTooltip] = useState(false);
 
   useEffect(() => {
-    if (profiles.some(p => p.type === 'kids') && activeProfile.type !== 'kids') {
+    if (profiles.some(p => p.type === 'kids') && activeProfile.type !== 'kids' && !hasSeenTooltip) {
       const timer = setTimeout(() => {
         setIsHighlighted(true);
       }, 3000);
@@ -48,7 +50,7 @@ const ProfileDropdown = ({
     } else {
       setIsHighlighted(false);
     }
-  }, [profiles, activeProfile]);
+  }, [profiles, activeProfile, hasSeenTooltip]);
 
   const getProfileColor = (profile: Profile) => {
     switch(profile.type) {
@@ -76,13 +78,30 @@ const ProfileDropdown = ({
     setIsAddProfileOpen(true);
   };
 
+  const handleTooltipInteraction = () => {
+    setIsHighlighted(false);
+    setHasSeenTooltip(true);
+  };
+
   return (
     <div className="relative">
-      {isHighlighted && (
-        <div className="absolute -top-10 right-0 bg-kids text-white p-2 rounded-lg shadow-lg animate-bounce">
-          <span className="text-sm whitespace-nowrap">Додайте профіль дитини</span>
-          <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-kids"></div>
-        </div>
+      {isHighlighted && !hasSeenTooltip && (
+        <TooltipProvider>
+          <Tooltip open={true}>
+            <TooltipTrigger asChild>
+              <div 
+                className="absolute -top-10 right-0 bg-kids text-white p-2 rounded-lg shadow-lg animate-bounce z-50"
+                onClick={handleTooltipInteraction}
+              >
+                <span className="text-sm whitespace-nowrap">Додайте профіль дитини</span>
+                <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-kids"></div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="bg-kids text-white">
+              Натисніть, щоб додати дитячий профіль
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
       
       <DropdownMenu>
@@ -132,3 +151,4 @@ const ProfileDropdown = ({
 };
 
 export default ProfileDropdown;
+

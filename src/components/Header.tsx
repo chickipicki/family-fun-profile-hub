@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileDropdown, { Profile } from './ProfileDropdown';
 
@@ -29,7 +28,7 @@ const Header = ({ activeProfile, setActiveProfile, profiles }: HeaderProps) => {
           </nav>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center">
           <ProfileDropdown 
             profiles={profiles}
             activeProfile={activeProfile}

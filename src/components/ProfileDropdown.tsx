@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export type Profile = {
   id: string;
@@ -42,18 +43,7 @@ const ProfileDropdown = ({
     }
   }, [profiles, activeProfile]);
 
-  const getProfileIcon = (type: string) => {
-    switch(type) {
-      case 'kids':
-        return <User className="h-5 w-5 text-family-blue" />;
-      case 'guest':
-        return <UserRound className="h-5 w-5 text-gray-500" />;
-      default:
-        return <User className="h-5 w-5" />;
-    }
-  };
-  
-  const getProfileBgColor = (profile: Profile) => {
+  const getProfileColor = (profile: Profile) => {
     switch(profile.type) {
       case 'kids':
         return 'bg-family-blue text-white';
@@ -61,6 +51,17 @@ const ProfileDropdown = ({
         return 'bg-gray-200 text-gray-700';
       default:
         return 'bg-primary text-primary-foreground';
+    }
+  };
+
+  const getProfileIcon = (type: string) => {
+    switch(type) {
+      case 'kids':
+        return <Users className="h-5 w-5" />;
+      case 'guest':
+        return <UserRound className="h-5 w-5" />;
+      default:
+        return <User className="h-5 w-5" />;
     }
   };
 
@@ -74,14 +75,12 @@ const ProfileDropdown = ({
       )}
       
       <DropdownMenu>
-        <DropdownMenuTrigger className={`flex items-center space-x-2 p-2 rounded-full ${isHighlighted ? 'ring-2 ring-kids animate-pulse' : ''}`}>
-          <div className={`profile-avatar ${getProfileBgColor(activeProfile)}`}>
-            {activeProfile.type === 'kids' ? (
-              <Users className="h-5 w-5" />
-            ) : (
-              <User className="h-5 w-5" />
-            )}
-          </div>
+        <DropdownMenuTrigger className={`flex items-center space-x-2 p-2 rounded-full transition-all ${isHighlighted ? 'ring-2 ring-kids' : ''}`}>
+          <Avatar className={`h-8 w-8 ${getProfileColor(activeProfile)}`}>
+            <AvatarFallback>
+              {getProfileIcon(activeProfile.type)}
+            </AvatarFallback>
+          </Avatar>
           <span>{activeProfile.name}</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
@@ -93,9 +92,11 @@ const ProfileDropdown = ({
               className={`flex items-center space-x-2 cursor-pointer ${activeProfile.id === profile.id ? 'bg-secondary' : ''}`}
               onClick={() => onProfileChange(profile)}
             >
-              <div className={`profile-avatar ${getProfileBgColor(profile)} w-8 h-8 flex items-center justify-center`}>
-                {getProfileIcon(profile.type)}
-              </div>
+              <Avatar className={`h-8 w-8 ${getProfileColor(profile)}`}>
+                <AvatarFallback>
+                  {getProfileIcon(profile.type)}
+                </AvatarFallback>
+              </Avatar>
               <span>{profile.name}</span>
             </DropdownMenuItem>
           ))}

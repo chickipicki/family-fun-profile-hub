@@ -1,5 +1,5 @@
 
-import { User, UserRound, Users } from "lucide-react";
+import { User, Users, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { 
   DropdownMenu,
@@ -24,33 +24,38 @@ type ProfileDropdownProps = {
   onProfileChange: (profile: Profile) => void;
 }
 
+const profileColors = {
+  main: 'bg-family-purple text-white hover:bg-purple-500 border-2 border-primary/90',
+  kids: 'bg-family-blue text-white hover:bg-kids border-2 border-blue-400',
+  guest: 'bg-[#FEC6A1] text-gray-700 hover:bg-orange-300 border-2 border-orange-300',
+};
+
 const ProfileDropdown = ({ 
   profiles, 
   activeProfile, 
   onProfileChange 
 }: ProfileDropdownProps) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
-  
-  // Highlight the profile button when needed for the tooltip
+
   useEffect(() => {
     if (profiles.some(p => p.type === 'kids') && activeProfile.type !== 'kids') {
-      // Show the highlight after 3 seconds if main profile is active and kids profile exists
       const timer = setTimeout(() => {
         setIsHighlighted(true);
       }, 3000);
-      
       return () => clearTimeout(timer);
+    } else {
+      setIsHighlighted(false);
     }
   }, [profiles, activeProfile]);
 
   const getProfileColor = (profile: Profile) => {
     switch(profile.type) {
       case 'kids':
-        return 'bg-family-blue text-white';
+        return profileColors.kids;
       case 'guest':
-        return 'bg-gray-200 text-gray-700';
+        return profileColors.guest;
       default:
-        return 'bg-primary text-primary-foreground';
+        return profileColors.main;
     }
   };
 
@@ -76,12 +81,12 @@ const ProfileDropdown = ({
       
       <DropdownMenu>
         <DropdownMenuTrigger className={`flex items-center space-x-2 p-2 rounded-full transition-all ${isHighlighted ? 'ring-2 ring-kids' : ''}`}>
-          <Avatar className={`h-8 w-8 ${getProfileColor(activeProfile)}`}>
+          <Avatar className={`h-8 w-8 ${getProfileColor(activeProfile)} shadow profile-avatar`}>
             <AvatarFallback>
               {getProfileIcon(activeProfile.type)}
             </AvatarFallback>
           </Avatar>
-          <span>{activeProfile.name}</span>
+          <span className="font-semibold">{activeProfile.name}</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel>Профілі</DropdownMenuLabel>
@@ -89,15 +94,19 @@ const ProfileDropdown = ({
           {profiles.map((profile) => (
             <DropdownMenuItem 
               key={profile.id}
-              className={`flex items-center space-x-2 cursor-pointer ${activeProfile.id === profile.id ? 'bg-secondary' : ''}`}
+              className={`flex items-center space-x-2 cursor-pointer ${
+                activeProfile.id === profile.id
+                  ? 'border-2 border-primary bg-secondary'
+                  : ''
+              }`}
               onClick={() => onProfileChange(profile)}
             >
-              <Avatar className={`h-8 w-8 ${getProfileColor(profile)}`}>
+              <Avatar className={`h-8 w-8 ${getProfileColor(profile)} profile-avatar`}>
                 <AvatarFallback>
                   {getProfileIcon(profile.type)}
                 </AvatarFallback>
               </Avatar>
-              <span>{profile.name}</span>
+              <span className="font-semibold">{profile.name}</span>
             </DropdownMenuItem>
           ))}
           <DropdownMenuSeparator />
@@ -111,3 +120,4 @@ const ProfileDropdown = ({
 };
 
 export default ProfileDropdown;
+

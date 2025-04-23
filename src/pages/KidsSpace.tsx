@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Profile } from "@/components/ProfileDropdown";
 import Header from "@/components/Header";
@@ -84,6 +83,7 @@ const KidsSpace = () => {
   const [activeProfile, setActiveProfile] = useState<Profile>(
     demoProfiles.find(p => p.type === 'kids') || demoProfiles[0]
   );
+  const [profiles, setProfiles] = useState<Profile[]>(demoProfiles);
   const [contentFilter, setContentFilter] = useState<'free' | 'premium' | 'all'>('free');
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [selectedContent, setSelectedContent] = useState<Content | undefined>(undefined);
@@ -99,6 +99,11 @@ const KidsSpace = () => {
   
   const handleProfileChange = (profile: Profile) => {
     setActiveProfile(profile);
+    
+    // If this is a new profile, add it to the profiles array
+    if (!profiles.some(p => p.id === profile.id)) {
+      setProfiles([...profiles, profile]);
+    }
   };
   
   const handlePurchaseRequest = (contentId: string) => {
@@ -125,7 +130,7 @@ const KidsSpace = () => {
       <Header 
         activeProfile={activeProfile}
         setActiveProfile={handleProfileChange}
-        profiles={demoProfiles}
+        profiles={profiles}
       />
       
       <main className="container py-8">

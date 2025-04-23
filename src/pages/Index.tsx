@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Profile } from "@/components/ProfileDropdown";
@@ -9,6 +8,7 @@ import ContentCard, { Content } from "@/components/ContentCard";
 import ContentFilter from "@/components/ContentFilter";
 import PurchaseConfirmation from "@/components/PurchaseConfirmation";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
 // Demo content for our app
 const demoContent: Content[] = [
@@ -70,6 +70,7 @@ const demoProfiles: Profile[] = [
 
 const Index = () => {
   const [activeProfile, setActiveProfile] = useState<Profile>(demoProfiles[0]);
+  const [profiles, setProfiles] = useState<Profile[]>(demoProfiles);
   const [contentFilter, setContentFilter] = useState<'free' | 'premium' | 'all'>('all');
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [selectedContent, setSelectedContent] = useState<Content | undefined>(undefined);
@@ -94,10 +95,26 @@ const Index = () => {
   };
   
   const handleTryKidsSpace = () => {
-    const kidsProfile = demoProfiles.find(p => p.type === 'kids');
+    const kidsProfile = profiles.find(p => p.type === 'kids');
     if (kidsProfile) {
       handleProfileChange(kidsProfile);
     }
+  };
+  
+  const handleCreateChildProfile = (profile: Profile) => {
+    // Add the new profile to the profiles array
+    const updatedProfiles = [...profiles, profile];
+    setProfiles(updatedProfiles);
+    
+    // Switch to the new profile
+    handleProfileChange(profile);
+    
+    // Show success toast
+    toast({
+      title: "Профіль створено!",
+      description: `Профіль "${profile.name}" успішно створено.`,
+      duration: 3000,
+    });
   };
   
   const handlePurchaseRequest = (contentId: string) => {
@@ -124,14 +141,17 @@ const Index = () => {
       <Header 
         activeProfile={activeProfile}
         setActiveProfile={handleProfileChange}
-        profiles={demoProfiles}
+        profiles={profiles}
       />
       
       <main className="container py-8">
         <OnboardingTour />
         
         {!isKidsProfile && (
-          <KidsBanner onTryKidsSpace={handleTryKidsSpace} />
+          <KidsBanner 
+            onTryKidsSpace={handleTryKidsSpace} 
+            onCreateChildProfile={handleCreateChildProfile}
+          />
         )}
         
         <div className="flex flex-col items-center mb-8">

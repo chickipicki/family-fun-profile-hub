@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import CreateChildProfileForm from "./CreateChildProfileForm";
 
 export type Profile = {
   id: string;
@@ -36,6 +37,7 @@ const ProfileDropdown = ({
   onProfileChange 
 }: ProfileDropdownProps) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
+  const [isAddProfileOpen, setIsAddProfileOpen] = useState(false);
 
   useEffect(() => {
     if (profiles.some(p => p.type === 'kids') && activeProfile.type !== 'kids') {
@@ -68,6 +70,10 @@ const ProfileDropdown = ({
       default:
         return <User className="h-5 w-5" />;
     }
+  };
+  
+  const handleAddProfile = () => {
+    setIsAddProfileOpen(true);
   };
 
   return (
@@ -110,14 +116,19 @@ const ProfileDropdown = ({
             </DropdownMenuItem>
           ))}
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleAddProfile}>
             <span className="text-primary font-medium">Додати профіль</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      
+      <CreateChildProfileForm 
+        isOpen={isAddProfileOpen}
+        onClose={() => setIsAddProfileOpen(false)}
+        onCreateProfile={onProfileChange}
+      />
     </div>
   );
 };
 
 export default ProfileDropdown;
-
